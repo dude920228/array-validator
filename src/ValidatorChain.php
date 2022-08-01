@@ -17,11 +17,17 @@ class ValidatorChain implements ValidatorInterface
     protected array $validators;
     protected array $messages = [];
     protected array $requredFields = [];
+    private array $requiredMessages = [];
 
     public function __construct(array $validatorsConfig)
     {
+
         foreach($validatorsConfig as $fieldName => $attachedValidators) {
             if(isset($attachedValidators['required']) && $attachedValidators['required'] == true) {
+                $this->requiredMessages[$fieldName] = 'The field is required and cannot be empty';
+                if(isset($attachedValidators['requiredMessage'])) {
+                    $this->requiredMessages[$fieldName] = $attachedValidators['requiredMessage'];
+                }
                 $this->requredFields[] = $fieldName;
             }
 
@@ -30,6 +36,7 @@ class ValidatorChain implements ValidatorInterface
             }
 
         }
+
     }
 
     private function createValidator(array $config)
@@ -71,10 +78,13 @@ class ValidatorChain implements ValidatorInterface
     {
         $success = $this->validateRequired($value);
         foreach($this->validators as $fieldName => $validators) {
+            if(!isset($value[$fieldName])) {
+                continue;
+            }
             $fieldValue = $value[$fieldName];
             foreach($validators as $validator) {
                 $success = $validator->isValid($fieldValue) && $success;
-                if($this->messages[$fieldName] === null) {
+                if(!isset($this->messages[$fieldName])) {
                     $this->messages[$fieldName] = [];
                 }
                 $this->messages[$fieldName] = array_merge($this->messages[$fieldName], $validator->getMessages());
@@ -90,7 +100,7 @@ class ValidatorChain implements ValidatorInterface
         foreach($this->requredFields as $required) {
             if(!array_key_exists($required, $value)) {
                 $success = false;
-                $this->messages[$required]['isEmpty'] = true;
+                $this->messages[$required][] = $this->requiredMessages[$required];
             }
         }
 

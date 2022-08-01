@@ -8,6 +8,11 @@
             "KDudas\\ArrayValidator\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "KDudas\\ArrayValidator\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Dudás Krisztián",
@@ -15,5 +20,7 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
 }

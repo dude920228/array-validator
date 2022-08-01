@@ -12,10 +12,11 @@ namespace KDudas\ArrayValidator;
  *
  * @author kdudas
  */
-class IsString implements ValidatorInterface
+class IsString extends ValidatorBase implements ValidatorInterface
 {
     private array $messages = [];
-    private string $message = 'The value provided is not string';
+    protected string $message = 'The value provided is not a string';
+
     public function getMessages(): array
     {
         return $this->messages;
@@ -31,10 +32,4 @@ class IsString implements ValidatorInterface
 
         return true;
     }
-
-    public function setMessage(string $message)
-    {
-        $this->message = $message;
-    }
-
 }
