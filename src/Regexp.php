@@ -12,11 +12,11 @@ namespace KDudas\ArrayValidator;
  *
  * @author kdudas
  */
-class Regexp implements ValidatorInterface
+class Regexp extends ValidatorBase implements ValidatorInterface
 {
     private string $pattern;
     private array $messages = [];
-    private string $message = 'The value provided doesn\'t match the required format';
+    protected string $message = 'The value provided doesn\'t match the required format';
 
     public function __construct(string $pattern)
     {
@@ -40,10 +40,4 @@ class Regexp implements ValidatorInterface
 
         return true;
     }
-
-    public function setMessage(string $message): void
-    {
-        $this->message = $message;
-    }
-
 }

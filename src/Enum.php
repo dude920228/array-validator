@@ -12,11 +12,11 @@ namespace KDudas\ArrayValidator;
  *
  * @author kdudas
  */
-class Enum implements ValidatorInterface
+class Enum extends ValidatorBase implements ValidatorInterface
 {
     private array $allowedElements;
     private array $messages = [];
-    private string $message = 'Value is not allowed';
+    protected string $message = 'Value is not allowed';
 
     public function __construct(array $allowedElements)
     {
@@ -37,10 +37,5 @@ class Enum implements ValidatorInterface
         }
 
         return true;
-    }
-
-    public function setMessage(string $message): void
-    {
-        $this->message = $message;
     }
 }
