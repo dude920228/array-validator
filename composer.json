@@ -1,0 +1,19 @@
+{
+    "name": "kdudas/array-validator",
+    "description": "Validate an array with a set of validators",
+    "type": "library",
+    "license": "gpl-3.0",
+    "autoload": {
+        "psr-4": {
+            "KDudas\\ArrayValidator\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dudás Krisztián",
+            "email": "dude920228@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
