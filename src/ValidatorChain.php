@@ -18,6 +18,7 @@ class ValidatorChain implements ValidatorInterface
     protected array $messages = [];
     protected array $requredFields = [];
     private array $requiredMessages = [];
+    private array $emptyRequiredFields = [];
 
     public function __construct(array $validatorsConfig)
     {
@@ -78,7 +79,7 @@ class ValidatorChain implements ValidatorInterface
     {
         $success = $this->validateRequired($value);
         foreach($this->validators as $fieldName => $validators) {
-            if(!isset($value[$fieldName])) {
+            if(!isset($value[$fieldName]) || in_array($fieldName, $this->emptyRequiredFields)) {
                 continue;
             }
             $fieldValue = $value[$fieldName];
@@ -98,8 +99,9 @@ class ValidatorChain implements ValidatorInterface
     {
         $success = true;
         foreach($this->requredFields as $required) {
-            if(!array_key_exists($required, $value)) {
+            if(!array_key_exists($required, $value) || empty($value[$required])) {
                 $success = false;
+                $this->emptyRequiredFields[] = $required;
                 $this->messages[$required][] = $this->requiredMessages[$required];
             }
         }

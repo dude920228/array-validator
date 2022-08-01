@@ -27,6 +27,8 @@ class DemoValidator extends ValidatorChain
             ],
             'name' => [
                 'required' => true,
+                //The Required message attribute changes the default message omitted when a field is required, but is empty or not present
+                'requiredMessage' => 'This field is required',
                 'validators' => [
                     [
                         'type' => IsString::class

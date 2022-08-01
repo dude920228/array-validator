@@ -81,7 +81,9 @@ class ValidatorChainTest extends TestCase
 
     public function testRequiredInput()
     {
-        $value = [];
+        $value = [
+            'second' => ''
+        ];
 
         $this->assertFalse($this->validatorChain->isValid($value));
         $this->assertEquals([
@@ -99,9 +101,8 @@ class ValidatorChainTest extends TestCase
         $value = [
             'first' => 123,
             'second' => 'invalid value',
-            'third' => []
+            'third' => ''
         ];
-
         $this->assertFalse($this->validatorChain->isValid($value));
         $this->assertEquals([
             'first' => [
@@ -109,7 +110,7 @@ class ValidatorChainTest extends TestCase
                 'The value provided doesn\'t match the required format'
             ],
             'second' =>  ['Invalid value'],
-            'third' => ['The value provided is not a string']
+            'third' => ['This field is required']
         ], $this->validatorChain->getMessages());
     }
 
