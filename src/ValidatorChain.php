@@ -51,8 +51,11 @@ class ValidatorChain implements ValidatorInterface
         }
         $orderedParams = [];
         foreach($params as $param) {
-            /** @var \ReflectionAttribute $param */
+            /** @var \ReflectionParameter $param */
             $paramName = $param->getName();
+            if(!isset($config['options']) && $param->isDefaultValueAvailable()) {
+                continue;
+            }
             $orderedParams[] = $config['options'][$paramName];
         }
 

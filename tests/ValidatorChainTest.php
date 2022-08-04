@@ -26,7 +26,10 @@ class ValidatorChainTest extends TestCase
             'required' => false,
             'validators' => [
                 [
-                    'type' => IsString::class
+                    'type' => IsString::class,
+                    'options' => [
+                        'acceptInt' => false
+                    ]
                 ],
                 [
                     'type' => Regexp::class,
@@ -58,19 +61,24 @@ class ValidatorChainTest extends TestCase
             ]
         ]
     ];
-    private ValidatorChain $validatorChain;
+    private ?ValidatorChain $validatorChain;
 
-    public function __construct($name = null, $data = [], $dataName = '')
+    public function setUp(): void
     {
-        parent::__construct($name, $data, $dataName);
-
+        parent::setUp();
         $this->validatorChain = new ValidatorChain($this->config);
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        $this->validatorChain = null;
     }
 
     public function testValidInput()
     {
         $value = [
-            'first' => 'abc',
+            'first' => "abc",
             'second' => 'active',
             'third' => 'abc'
         ];

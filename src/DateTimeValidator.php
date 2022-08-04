@@ -33,7 +33,7 @@ class DateTimeValidator extends ValidatorBase implements ValidatorInterface
         return $this->messages;
     }
 
-    public function isValid($value, bool $isInvalidTest = false): bool
+    public function isValid($value): bool
     {
         $dateTime = DateTime::createFromFormat($this->format, $value);
         if (!$dateTime) {
