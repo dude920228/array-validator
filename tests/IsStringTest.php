@@ -26,7 +26,7 @@ class IsStringTest extends TestCase
 
     public function testIsStringInvalidValue()
     {
-        $validator = new \KDudas\ArrayValidator\IsString();
+        $validator = new \KDudas\ArrayValidator\IsString(false);
         $value = 1;
         $this->assertFalse($validator->isValid($value));
         $this->assertEquals(['The value provided is not a string'], $validator->getMessages());
@@ -34,7 +34,7 @@ class IsStringTest extends TestCase
 
     public function testIsStringCustomMessage()
     {
-        $validator = new \KDudas\ArrayValidator\IsString();
+        $validator = new \KDudas\ArrayValidator\IsString(false);
         $validator->setMessage('You must provide a text');
         $value = 1;
         $this->assertFalse($validator->isValid($value));

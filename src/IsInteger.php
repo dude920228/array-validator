@@ -8,19 +8,22 @@
 namespace KDudas\ArrayValidator;
 
 /**
- * Description of String
+ * Description of IsInteger
  *
  * @author kdudas
  */
-class IsString extends ValidatorBase implements ValidatorInterface
+class IsInteger extends ValidatorBase implements ValidatorInterface
 {
+    private bool $strict;
+    protected string $message = "Value is not an integer";
     private array $messages = [];
-    protected string $message = 'The value provided is not a string';
-    private bool $acceptInt;
 
-    public function __construct(bool $acceptInt = true)
+    public function __construct(bool $strict = true)
     {
-        $this->acceptInt = $acceptInt;
+        $this->strict = $strict;
+        if(!$this->strict) {
+            $this->message = "Value is not numeric";
+        }
     }
 
     public function getMessages(): array
@@ -30,18 +33,15 @@ class IsString extends ValidatorBase implements ValidatorInterface
 
     public function isValid($value): bool
     {
-        if(!is_string($value) && !$this->acceptInt) {
-            $this->messages[] = $this->message;
-            return false;
-        }
-        if(is_int($value) && $this->acceptInt) {
+        if($this->strict && is_int($value)) {
             return true;
         }
-        if(is_string($value)) {
+        if(!$this->strict && is_numeric($value)) {
             return true;
         }
         $this->messages[] = $this->message;
-        
+
         return false;
     }
+
 }
