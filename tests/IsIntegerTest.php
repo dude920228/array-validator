@@ -27,7 +27,7 @@ class IsIntegerTest extends TestCase
 
     public function testIsIntegerValid()
     {
-        $validator = new IsInteger(false);
+        $validator = new IsInteger(true);
         $value = 1;
         $this->assertTrue($validator->isValid($value));
         $this->assertEmpty($validator->getMessages());
@@ -38,7 +38,7 @@ class IsIntegerTest extends TestCase
 
     public function testIsIntegerInvalid()
     {
-        $validator = new IsInteger();
+        $validator = new IsInteger(false);
         $value = "asd";
         $this->assertFalse($validator->isValid($value));
         $this->assertEquals(["Value is not an integer"], $validator->getMessages());
@@ -46,7 +46,7 @@ class IsIntegerTest extends TestCase
 
     public function testIsIntegerInvalidNumericStringAllowed()
     {
-        $validator = new IsInteger(false);
+        $validator = new IsInteger(true);
         $value = "asd";
         $this->assertFalse($validator->isValid($value));
         $this->assertEquals(["Value is not numeric"], $validator->getMessages());
