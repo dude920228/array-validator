@@ -51,4 +51,12 @@ class IsIntegerTest extends TestCase
         $this->assertFalse($validator->isValid($value));
         $this->assertEquals(["Value is not numeric"], $validator->getMessages());
     }
+
+    public function testIsIntegerInvalidNumericStringAllowedFloatValue()
+    {
+        $validator = new IsInteger(true);
+        $value = "10.12132";
+        $this->assertFalse($validator->isValid($value));
+        $this->assertEquals(["Value is not numeric"], $validator->getMessages());
+    }
 }
