@@ -36,7 +36,7 @@ class IsInteger extends ValidatorBase implements ValidatorInterface
         if(!$this->acceptNumericString && is_int($value)) {
             return true;
         }
-        if($this->acceptNumericString && is_numeric($value)) {
+        if($this->acceptNumericString && is_numeric($value) && strpos($value, '.') === false) {
             return true;
         }
         $this->messages[] = $this->message;
