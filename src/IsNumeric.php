@@ -8,7 +8,7 @@ namespace KDudas\ArrayValidator;
  */
 class IsNumeric extends ValidatorBase implements ValidatorInterface
 {
-    protected $message = 'The value is not numeric';
+    protected string $message = 'The value is not numeric';
     private $messages = [];
 
     public function getMessages(): array
@@ -19,7 +19,7 @@ class IsNumeric extends ValidatorBase implements ValidatorInterface
     public function isValid($value): bool
     {
         if (!is_numeric($value)) {
-            $this->messages[] = $message;
+            $this->messages[] = $this->message;
 
             return false;
         }
