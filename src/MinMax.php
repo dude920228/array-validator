@@ -12,15 +12,17 @@ namespace KDudas\ArrayValidator;
  *
  * @author kdudas
  */
-class MinMax extends IsInteger
+class MinMax extends IsNumeric
 {
     private int $min;
     private int $max;
     private string $ownMessage = "The value is outside of the available range of values";
+    private bool $acceptNumericString;
+    private array $messages = [];
 
-    public function __construct(int $min = PHP_INT_MIN, int $max = PHP_INT_MAX, bool $strict = true)
+    public function __construct(int $min = PHP_INT_MIN, int $max = PHP_INT_MAX, bool $acceptNumericString = true)
     {
-        parent::__construct($strict);
+        $this->acceptNumericString = $acceptNumericString;
         $this->min = $min;
         $this->max = $max;
     }
@@ -32,8 +34,8 @@ class MinMax extends IsInteger
 
     public function isValid($value): bool
     {
-        $isInt = parent::isValid($value);
-        if(!$isInt) {
+        $isNumeric = parent::isValid($value);
+        if(!$isNumeric) {
             $this->messages = parent::getMessages();
             return false;
         }

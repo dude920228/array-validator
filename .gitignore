@@ -1,3 +1,5 @@
 vendor/
 nbproject/
 composer.lock
+tests/coverage/
+.phpunit.cache/
