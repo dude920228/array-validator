@@ -6,7 +6,7 @@ namespace KDudas\ArrayValidator;
  * Description of IsFloat
  *
  */
-class IsFloat extends ValidatorBase implements ValidatorInterface
+class IsFloat extends IsNumeric implements ValidatorInterface
 {
     private array $messages = [];
     protected string $message = 'The value is not a floating point number';
@@ -24,12 +24,15 @@ class IsFloat extends ValidatorBase implements ValidatorInterface
 
     public function isValid($value): bool
     {
-        if($this->acceptNumericString && is_numeric($value) && strpos($value, '.') !== false) {
-            return true;
+        if(parent::isValid($value)) {
+            if($this->acceptNumericString && strpos($value, '.') !== false && is_string($value)) {
+                return true;
+            }
+            if(is_float($value) || is_int($value)) {
+                return true;
+            }
         }
-        if(!$this->acceptNumericString && is_float($value)) {
-            return true;
-        }
+        $this->messages[] = $this->message;
 
         return false;
     }

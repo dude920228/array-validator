@@ -12,7 +12,7 @@ namespace KDudas\ArrayValidator;
  *
  * @author kdudas
  */
-class IsInteger extends ValidatorBase implements ValidatorInterface
+class IsInteger extends IsNumeric implements ValidatorInterface
 {
     private bool $acceptNumericString;
     protected string $message = "Value is not an integer";
@@ -22,7 +22,7 @@ class IsInteger extends ValidatorBase implements ValidatorInterface
     {
         $this->acceptNumericString = $acceptNumericString;
         if($this->acceptNumericString) {
-            $this->message = "Value is not numeric";
+            $this->message = "The value is not numeric";
         }
     }
 
@@ -33,15 +33,18 @@ class IsInteger extends ValidatorBase implements ValidatorInterface
 
     public function isValid($value): bool
     {
-        if(!$this->acceptNumericString && is_int($value)) {
-            return true;
+        if(parent::isValid($value)) {
+            if(!$this->acceptNumericString && is_int($value)) {
+                return true;
+            }
+            if($this->acceptNumericString && strpos($value, '.') === false) {
+                return true;
+            }
         }
-        if($this->acceptNumericString && is_numeric($value) && strpos($value, '.') === false) {
-            return true;
-        }
-        $this->messages[] = $this->message;
 
+        $this->messages[] = $this->message;
         return false;
+
     }
 
 }
